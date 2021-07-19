@@ -12,6 +12,7 @@ import com.odianyun.internship.model.ListResult;
 import com.odianyun.internship.model.VO.SoVO;
 import com.odianyun.internship.service.SoService;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -73,8 +74,11 @@ public class SoServiceImpl implements SoService {
     @Override
     public void batchUpdateStatus(List<String> dtoList) {
         List<SoVO> list = soMapper.listByOrderCodes(dtoList);
-        list.stream().filter(item -> SoConstant.ORDER_STATUS_DELIVERED.compareTo(item.getOrderStatus()) > 0)
-                .forEach(item -> item.setOrderStatus(SoConstant.ORDER_STATUS_DELIVERED));
+        List<SoVO> updateList = list.stream().filter(item -> SoConstant.ORDER_STATUS_DELIVERED.compareTo(item.getOrderStatus()) > 0).collect(Collectors.toList());
+        if(CollectionUtils.isEmpty(updateList)){
+            return;
+        }
+        updateList.forEach(item -> item.setOrderStatus(SoConstant.ORDER_STATUS_DELIVERED));
 //        List<SoVO> list2 = Lists.newArrayListWithCapacity(list.size());
 
         /*List<SoVO> list2 = Lists.newArrayList();
@@ -85,6 +89,6 @@ public class SoServiceImpl implements SoService {
             }
         }*/
 
-        soMapper.batchUpdateStatus(list);
+        soMapper.batchUpdateStatus(updateList);
     }
 }
