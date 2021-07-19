@@ -88,7 +88,6 @@ public class SoServiceImpl implements SoService {
                 list2.add(soVO);
             }
         }*/
-
         soMapper.batchUpdateStatus(updateList);
     }
 }
