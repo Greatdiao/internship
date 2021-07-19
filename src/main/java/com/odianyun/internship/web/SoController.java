@@ -1,6 +1,8 @@
 package com.odianyun.internship.web;
 
+import com.google.common.collect.Lists;
 import com.odianyun.internship.model.DTO.SoDTO;
+import com.odianyun.internship.model.ListResult;
 import com.odianyun.internship.model.VO.SoVO;
 import com.odianyun.internship.service.SoService;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,6 +28,12 @@ public class SoController {
     @RequestMapping("list")
     public List<SoVO> list(@RequestBody SoDTO dto) {
         List<SoVO> list = soService.list(dto);
+        return list;
+    }
+
+    @RequestMapping("listPage")
+    public ListResult<SoVO> listPage(@RequestBody SoDTO dto) {
+        ListResult<SoVO> list = soService.listPage(dto);
         return list;
     }
 

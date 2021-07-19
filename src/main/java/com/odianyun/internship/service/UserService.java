@@ -20,4 +20,10 @@ public interface UserService {
     List<UUser> list(UUserDTO dto);
 
     void batchAdd(List<UUserDTO> dtoList);
+
+    void batchUpdate(List<UUserDTO> dtoList);
+
+    void batchInsertOrUpdate(List<UUserDTO> dtoList);
+
+    UUser addAnno(UUserDTO dto);
 }

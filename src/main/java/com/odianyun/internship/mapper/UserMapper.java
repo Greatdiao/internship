@@ -2,6 +2,7 @@ package com.odianyun.internship.mapper;
 
 import com.odianyun.internship.model.DTO.UUserDTO;
 import com.odianyun.internship.model.UUser;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -22,7 +23,14 @@ public interface UserMapper {
 
     void add(UUser user);
 
+    @Insert("insert into u_user(mobile, password, is_deleted, company_id) values (#{mobile}, #{password}, 1, #{companyId})")
+    void addAnno(UUser user);
+
     List<UUser> list(UUserDTO dto);
 
     void batchAdd(List<UUserDTO> dtoList);
+
+    void batchUpdate(List<UUserDTO> dtoList);
+
+    void batchInsertOrUpdate(List<UUserDTO> dtoList);
 }

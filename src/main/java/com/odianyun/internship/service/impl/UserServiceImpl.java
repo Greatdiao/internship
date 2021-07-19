@@ -69,4 +69,24 @@ public class UserServiceImpl implements UserService {
     public void batchAdd(List<UUserDTO> dtoList) {
         userMapper.batchAdd(dtoList);
     }
+
+    @Override
+    public void batchUpdate(List<UUserDTO> dtoList) {
+        userMapper.batchUpdate(dtoList);
+    }
+
+    @Override
+    public void batchInsertOrUpdate(List<UUserDTO> dtoList) {
+        userMapper.batchInsertOrUpdate(dtoList);
+    }
+
+    @Override
+    public UUser addAnno(UUserDTO dto) {
+        UUser user = new UUser();
+        // 复制
+        BeanUtils.copyProperties(dto, user);
+        userMapper.addAnno(user);
+
+        return user;
+    }
 }

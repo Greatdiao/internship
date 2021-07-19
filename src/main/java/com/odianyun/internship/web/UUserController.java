@@ -53,6 +53,12 @@ public class UUserController {
         return user;
     }
 
+    @PostMapping("addAnno")
+    public UUser addAnno(@RequestBody UUserDTO dto){
+        UUser user = userService.addAnno(dto);
+        return user;
+    }
+
     @PostMapping("batchAdd")
     public void batchAdd(@RequestBody List<UUserDTO> dtoList){
         userService.batchAdd(dtoList);
@@ -63,6 +69,16 @@ public class UUserController {
     public List<UUser> list(@RequestBody UUserDTO dto){
         List<UUser> list = userService.list(dto);
         return list;
+    }
+
+    @PostMapping("batchUpdate")
+    public void batchUpdate(@RequestBody List<UUserDTO> dtoList) {
+        userService.batchUpdate(dtoList);
+    }
+
+    @PostMapping("batchInsertOrUpdate")
+    public void batchInsertOrUpdate(@RequestBody List<UUserDTO> dtoList) {
+        userService.batchInsertOrUpdate(dtoList);
     }
 
 }

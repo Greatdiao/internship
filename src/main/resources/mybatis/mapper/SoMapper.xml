@@ -11,6 +11,12 @@
                     #{id}
                 </foreach>
             </if>
+            <if test="orderStatus != null">
+                <!--and order_status &gt;= #{orderStatus}-->
+                <!--and order_status &gt; #{orderStatus}-->
+                <!--and order_status &lt;= #{orderStatus}-->
+                and order_status &lt; #{orderStatus}
+            </if>
             <include refid="orderCodeParam"/>
         </where>
     </select>
@@ -32,7 +38,7 @@
         </if>
     </sql>
 
-    <select id="choose" resultType="SoVO">
+    <!--<select id="choose" resultType="SoVO">
         select id, order_code, user_id, user_name, merchant_id, order_status
         from so
         <where>
@@ -42,6 +48,29 @@
                 </when>
                 <otherwise>
                     and order_status in (1050, 1060)
+                </otherwise>
+            </choose>
+        </where>
+        limit 0, 10
+    </select>-->
+    <select id="choose" resultType="SoVO">
+        select id, order_code, user_id, user_name, merchant_id, order_status
+        from so
+        <where>
+            <choose>
+                <!--<when test="orderStatus == @com.odianyun.internship.constant.SoConstant@FRONT_ORDER_STATUS_CLOSED">
+                    and order_status = ${@com.odianyun.internship.constant.SoConstant@ORDER_STATUS_CLOSED}
+                </when>-->
+
+                <when test="@com.odianyun.internship.constant.SoConstant@checkStatus(orderStatus, @com.odianyun.internship.constant.SoConstant@FRONT_ORDER_STATUS_CLOSED)">
+                    and order_status = ${@com.odianyun.internship.constant.SoConstant@ORDER_STATUS_CLOSED}
+                </when>
+                <otherwise>
+                    and order_status in (1050, 1060, 1070)
+                    <foreach collection="@com.odianyun.internship.constant.SoConstant@ORDER_STATUS_DELIVERY_List"
+                             item="item" open="(" close=")" separator=",">
+                        #{item}
+                    </foreach>
                 </otherwise>
             </choose>
         </where>

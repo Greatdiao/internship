@@ -25,6 +25,10 @@ public class SoDTO implements Serializable {
 
     private Integer orderStatus;
 
+    private Integer pageNum;
+
+    private Integer pageSize;
+
     public Long getId() {
         return id;
     }
@@ -79,5 +83,21 @@ public class SoDTO implements Serializable {
 
     public void setOrderStatus(Integer orderStatus) {
         this.orderStatus = orderStatus;
+    }
+
+    public Integer getPageNum() {
+        return pageNum;
+    }
+
+    public void setPageNum(Integer pageNum) {
+        this.pageNum = pageNum;
+    }
+
+    public Integer getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(Integer pageSize) {
+        this.pageSize = pageSize;
     }
 }

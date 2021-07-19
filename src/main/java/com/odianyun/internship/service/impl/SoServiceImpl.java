@@ -1,7 +1,11 @@
 package com.odianyun.internship.service.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.odianyun.internship.mapper.SoMapper;
 import com.odianyun.internship.model.DTO.SoDTO;
+import com.odianyun.internship.model.ListResult;
 import com.odianyun.internship.model.VO.SoVO;
 import com.odianyun.internship.service.SoService;
 import org.springframework.stereotype.Service;
@@ -23,6 +27,9 @@ public class SoServiceImpl implements SoService {
 
     @Override
     public List<SoVO> list(SoDTO dto) {
+        PageHelper.startPage(dto.getPageNum(), dto.getPageSize());
+//        PageHelper.offsetPage(dto.getPageNum(), dto.getPageSize());
+//        PageHelper.startPage(dto.getPageNum(), dto.getPageSize(), false);
         return soMapper.list(dto);
     }
 
@@ -34,5 +41,20 @@ public class SoServiceImpl implements SoService {
     @Override
     public List<SoVO> choose(SoDTO dto) {
         return soMapper.choose(dto);
+    }
+
+    @Override
+    public ListResult<SoVO> listPage(SoDTO dto) {
+        PageHelper.startPage(dto.getPageNum(), dto.getPageSize());
+        List<SoVO> list = soMapper.list(dto);
+        PageInfo page = new PageInfo(list);
+
+        /*ListResult<SoVO> result = new ListResult<SoVO>();
+        result.setPages(page.getPages());
+        result.setTotal(page.getTotal());
+        result.setList(page.getList());
+        return result;*/
+
+        return new ListResult<SoVO>(page.getTotal(), page.getPages(), page.getList());
     }
 }
