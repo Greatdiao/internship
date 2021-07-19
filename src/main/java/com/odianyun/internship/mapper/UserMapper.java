@@ -2,6 +2,7 @@ package com.odianyun.internship.mapper;
 
 import com.odianyun.internship.model.DTO.UUserDTO;
 import com.odianyun.internship.model.UUser;
+import com.odianyun.internship.model.VO.SoVO;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface UserMapper {
+
     UUser getById(Long id);
 
     void update(UUserDTO dto);

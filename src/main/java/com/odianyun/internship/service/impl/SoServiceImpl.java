@@ -3,7 +3,10 @@ package com.odianyun.internship.service.impl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.google.common.collect.Lists;
+import com.odianyun.internship.constant.SoConstant;
 import com.odianyun.internship.mapper.SoMapper;
+import com.odianyun.internship.mapper.UserMapper;
 import com.odianyun.internship.model.DTO.SoDTO;
 import com.odianyun.internship.model.ListResult;
 import com.odianyun.internship.model.VO.SoVO;
@@ -12,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @description:
@@ -56,5 +60,31 @@ public class SoServiceImpl implements SoService {
         return result;*/
 
         return new ListResult<SoVO>(page.getTotal(), page.getPages(), page.getList());
+    }
+
+    @Override
+    public ListResult<SoVO> listSoPage(SoDTO dto) {
+        PageHelper.startPage(dto.getPageNum(), dto.getPageSize());
+        List<SoVO> list = soMapper.listSoPage(dto);
+        PageInfo page = new PageInfo(list);
+        return new ListResult<SoVO>(page.getTotal(), page.getPages(), page.getList());
+    }
+
+    @Override
+    public void batchUpdateStatus(List<String> dtoList) {
+        List<SoVO> list = soMapper.listByOrderCodes(dtoList);
+        list.stream().filter(item -> SoConstant.ORDER_STATUS_DELIVERED.compareTo(item.getOrderStatus()) > 0)
+                .forEach(item -> item.setOrderStatus(SoConstant.ORDER_STATUS_DELIVERED));
+//        List<SoVO> list2 = Lists.newArrayListWithCapacity(list.size());
+
+        /*List<SoVO> list2 = Lists.newArrayList();
+        for(SoVO soVO : list){
+            if (SoConstant.ORDER_STATUS_DELIVERED.compareTo(soVO.getOrderStatus()) > 0) {
+                soVO.setOrderStatus(SoConstant.ORDER_STATUS_DELIVERED);
+                list2.add(soVO);
+            }
+        }*/
+
+        soMapper.batchUpdateStatus(list);
     }
 }

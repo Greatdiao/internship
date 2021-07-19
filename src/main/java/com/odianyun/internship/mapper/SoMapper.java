@@ -17,4 +17,10 @@ public interface SoMapper {
     SoVO get(SoDTO dto);
 
     List<SoVO> choose(SoDTO dto);
+
+    List<SoVO> listSoPage(SoDTO dto);
+
+    void batchUpdateStatus(List<SoVO> dto);
+
+    List<SoVO> listByOrderCodes(List<String> list);
 }

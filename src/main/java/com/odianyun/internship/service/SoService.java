@@ -14,4 +14,8 @@ public interface SoService {
     List<SoVO> choose(SoDTO dto);
 
     ListResult<SoVO> listPage(SoDTO dto);
+
+    ListResult<SoVO> listSoPage(SoDTO dto);
+
+    void batchUpdateStatus(List<String> dto);
 }

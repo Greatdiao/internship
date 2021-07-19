@@ -5,9 +5,7 @@ import com.odianyun.internship.model.DTO.SoDTO;
 import com.odianyun.internship.model.ListResult;
 import com.odianyun.internship.model.VO.SoVO;
 import com.odianyun.internship.service.SoService;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -47,5 +45,17 @@ public class SoController {
     public List<SoVO> choose(@RequestBody SoDTO dto) {
         List<SoVO> list = soService.choose(dto);
         return list;
+    }
+
+    @PostMapping("listSoPage")
+    public ListResult<SoVO> listSoPage(@RequestBody SoDTO dto) {
+        ListResult<SoVO> list = soService.listSoPage(dto);
+        return list;
+    }
+
+    @PostMapping("batchUpdateStatus")
+    public String batchUpdateStatus(@RequestBody List<String> dtoList) {
+        soService.batchUpdateStatus(dtoList);
+        return "success";
     }
 }

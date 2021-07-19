@@ -23,7 +23,7 @@ public class UUserController {
     private UserService userService;
 
     @GetMapping("getById")
-    public UUser getById(Long id) {
+    public UUser getById(@RequestParam("id") Long id) {
         return userService.getById(id);
     }
 

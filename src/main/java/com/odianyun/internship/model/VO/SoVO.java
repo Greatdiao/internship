@@ -1,6 +1,9 @@
 package com.odianyun.internship.model.VO;
 
+import com.odianyun.internship.constant.SoConstant;
+
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @description:
@@ -15,13 +18,25 @@ public class SoVO implements Serializable {
 
     private String orderCode;
 
+    private String parentOrderCode;
+
     private Long userId;
 
     private String userName;
 
     private Long merchantId;
 
+    private String merchantName;
+
+    private Long storeId;
+
+    private String storeName;
+
     private Integer orderStatus;
+
+    private Date orderCreateTime;
+
+    private String orderRemarkUser;
 
     public Long getId() {
         return id;
@@ -70,4 +85,57 @@ public class SoVO implements Serializable {
     public void setOrderStatus(Integer orderStatus) {
         this.orderStatus = orderStatus;
     }
+
+    public String getParentOrderCode() {
+        return parentOrderCode;
+    }
+
+    public void setParentOrderCode(String parentOrderCode) {
+        this.parentOrderCode = parentOrderCode;
+    }
+
+    public String getMerchantName() {
+        return merchantName;
+    }
+
+    public void setMerchantName(String merchantName) {
+        this.merchantName = merchantName;
+    }
+
+    public Long getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(Long storeId) {
+        this.storeId = storeId;
+    }
+
+    public String getStoreName() {
+        return storeName;
+    }
+
+    public void setStoreName(String storeName) {
+        this.storeName = storeName;
+    }
+
+    public Date getOrderCreateTime() {
+        return orderCreateTime;
+    }
+
+    public void setOrderCreateTime(Date orderCreateTime) {
+        this.orderCreateTime = orderCreateTime;
+    }
+
+    public String getOrderRemarkUser() {
+        return orderRemarkUser;
+    }
+
+    public void setOrderRemarkUser(String orderRemarkUser) {
+        this.orderRemarkUser = orderRemarkUser;
+    }
+
+    public String getOrderStatusStr() {
+        return SoConstant.STATUS_MAP.get(orderStatus);
+    }
+
 }
