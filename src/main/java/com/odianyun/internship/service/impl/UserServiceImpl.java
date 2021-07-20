@@ -6,9 +6,12 @@ import com.odianyun.internship.model.UUser;
 import com.odianyun.internship.service.UserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -25,14 +28,31 @@ public class UserServiceImpl implements UserService {
     @Resource
     private UserMapper userMapper;
 
+    @Resource
+    private RedisTemplate<String, Serializable> redisTemplate;
+
+    public static final String CACHE_USER_INFO_KEY_PREFIX = "userInfo";
+
 
     @Override
     public UUser getById(Long id) {
-        return userMapper.getById(id);
+        ValueOperations operations = redisTemplate.opsForValue();
+        String key = CACHE_USER_INFO_KEY_PREFIX + id;
+        Object cacheUUser = operations.get(key);
+        if (null != cacheUUser) {
+            System.out.println("使用了redis缓存");
+            return (UUser) cacheUUser;
+        }
+
+        UUser uuser = userMapper.getById(id);
+        operations.set(key, uuser);
+        return uuser;
     }
 
     @Override
     public void update(UUserDTO dto) {
+        String key = CACHE_USER_INFO_KEY_PREFIX + dto.getId();
+        redisTemplate.delete(key);
         userMapper.update(dto);
     }
 

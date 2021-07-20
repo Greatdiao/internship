@@ -28,9 +28,9 @@ public class UUserController {
     }
 
     @PostMapping("update")
-    public UUser update(@RequestBody UUserDTO dto){
+    public void update(@RequestBody UUserDTO dto){
         userService.update(dto);
-        return userService.getById(dto.getId());
+//        return userService.getById(dto.getId());
     }
 
 
@@ -80,5 +80,6 @@ public class UUserController {
     public void batchInsertOrUpdate(@RequestBody List<UUserDTO> dtoList) {
         userService.batchInsertOrUpdate(dtoList);
     }
+
 
 }

@@ -1,12 +1,9 @@
 package com.odianyun.internship.web;
 
-import com.odianyun.internship.model.UUser;
 import com.odianyun.internship.model.User;
-import com.odianyun.internship.startup.config.RedisConfig;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.util.*;
 
@@ -24,9 +21,6 @@ public class UserController {
     private String kuaidi100Url;
     @Value("${message.appId}")
     private String messageAppId;
-
-    @Resource
-    private RedisConfig redisConfig;
 
     @GetMapping("getResultMap")
     public Map<String, Object> getResultMap() {
@@ -113,11 +107,6 @@ public class UserController {
     @GetMapping("getKuaiDiUrl")
     public String getKuaiDiUrl() {
         return kuaidi100Url;
-    }
-
-    @GetMapping("getRedisPort")
-    public String getRedisPort() {
-        return redisConfig.getPort();
     }
 
     @GetMapping("getMessageAppId")
